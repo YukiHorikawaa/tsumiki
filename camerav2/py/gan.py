@@ -9,26 +9,29 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, BatchNormalization, Conv2DTranspose, Activation, Flatten, Dropout, Reshape, GlobalAveragePooling2D, MaxPooling2D
 from keras.layers.advanced_activations import LeakyReLU
 from keras.preprocessing.image import ImageDataGenerator
-# from keras.models import load_model
 from keras.callbacks import EarlyStopping
 
 #AttributeError: ‘_thread._local’ object has no attribute ‘value’の解決策以下
 import keras.backend.tensorflow_backend as tb
 tb._SYMBOLIC_SCOPE.value = True
 #-------------------------------学習modelのロード-------------------------------
-from keras.models import load_model
-#AttributeError: ‘_thread._local’ object has no attribute ‘value’の解決策,以下のようにモデルをロードするといいと書いてあったが、エラーが出てしまったため、これまで通りロードしている
-# from tensorflow.keras.models import load_model
+# model and backend graph must be created on global
+import keras.models
+import tensorflow as tf
+global model, graph
+
 def autoencoder_model(encoder, decoder):
     model = Sequential()
     model.add(encoder)
     model.add(decoder)
     return model
 #学習済みモデルの読込
-encoder=load_model('py/AE_para/encoder_250.h5')
-decoder=load_model('py/AE_para/decoder_250.h5')
+encoder=keras.models.load_model('py/AE_para/encoder_250.h5')
+decoder=keras.models.load_model('py/AE_para/decoder_250.h5')
 autoencoder = autoencoder_model(encoder, decoder)
 autoencoder.summary()
+graph = tf.get_default_graph()
+
 input_dir = 'py/output/'
 pred_dir = 'py/pred/'
 
@@ -39,7 +42,9 @@ def gan_image(img_name):
     img = (img - 127.5) / 127.5
     img = img[np.newaxis, ...]
     pred = autoencoder.predict(img)
-    pred = np.squeeze(pred)
+    # pred = np.squeeze(pred)
+    with graph.as_default(): # use the global graph
+        pred = autoencoder.predict(img)
     img = Image.fromarray(np.uint8(pred * 127.5 + 127.5))
     file_name = pred_dir + img_name + '.JPG' 
     img.save(file_name)
