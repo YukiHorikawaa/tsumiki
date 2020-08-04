@@ -17,12 +17,14 @@
     <script src="{{ url_for('static', filename='js/longbox.js')}}"></script>
     <p><a href="/generategan">go</a></p>
     {% block content %}
-    <div style="flex-diretion: row;">
-        <div>
-            <img src="{{ url_for('feed') }}"
-        </div>
-        <div>
-            <script type="text/javascript">
+    <form action="/" method="POST">
+        <p>Write a message:</p>
+        <p><input type="text" name="com" id="com"></p>
+        <p><input type="submit" value="Finish"></p>
+    </form>
+<div style='width:100%'>
+    <div style='width:50%; float: left;'>
+        <script type="text/javascript">
             
             //from Python
             let python_shape = {{ input_shape | tojson }}; 
@@ -628,14 +630,11 @@
                 }
             }
             </script>
-        </div>
-    </div>
-
-<form action="/" method="POST">
-    <p>Write a message:</p>
-    <p><input type="text" name="com" id="com"></p>
-    <p><input type="submit" value="Finish"></p>
-</form>
+    </div>    
+    <div style='width:50%; float: right;'>
+        <img src="{{ url_for('feed') }}"
+    </div>  
+</div>
 {% endblock %}
 
 </body></html>

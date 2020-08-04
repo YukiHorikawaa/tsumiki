@@ -12,7 +12,7 @@ class VideoCamera():
         success, image = self.video.read()
         height = image.shape[0]
         width = image.shape[1]
-        image = cv2.resize(image , (int(width*0.5), int(height*0.5)))
+        image = cv2.resize(image , (int(width*0.7), int(height*0.7)))
         ret, jpeg = cv2.imencode('.jpg',image)
         return jpeg.tobytes()
 
