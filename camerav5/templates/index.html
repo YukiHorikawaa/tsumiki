@@ -129,7 +129,7 @@
                 rect(x_now_min, y_now_min, x_range, y_range);
                 text('minx', x_now_min, y_now_min);
                 noStroke();
-                fill(0, 255, 255, 40);
+                fill(0, 255, 255, 80);
                 for(let i = 0; i < estimation_x.length; i++){
                 rect(estimation_x[i]-25, estimation_y[i]-25, 50, 50);
                 console.log(estimation_y.length);
@@ -304,6 +304,7 @@
                 }
                 
                 diff = abs(sim_aim.y.toFixed(2) - advance_y[sim_step]);
+                diffx = abs(sim_aim.x.toFixed(2) - advance_x[sim_step]);
                 diff_flag = false;
                 print('diff-------------', diff);
 
@@ -322,12 +323,17 @@
 
 
 
-                if(diff >= 30){
+                if(diff >= 5){
                     print('不安定');
                     fill(255,0,0);   
                     diff_flag = true;
-                    }
-                if(count > 10 && diff < 3 ){
+                }
+                if(diffx >= 3){
+                    print('不安定');
+                    fill(255,0,0);   
+                    diff_flag = true;
+                }
+                if(count > 30 && diff < 3 ){
                     diff_flag = true;
                     estimation_x.push(advance_x[sim_step]);
                     estimation_y.push(advance_y[sim_step]);
