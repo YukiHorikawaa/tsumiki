@@ -3,6 +3,7 @@ from datetime import timedelta
 from camera import VideoCamera 
 import py.resize as py_resize
 import py.gan as py_gan
+from py.twitter_bot import twitter_bot
 
 import os
 import numpy as np
@@ -32,6 +33,15 @@ def index():
 
 @app.route('/output/<name>')
 def output(name):
+    cap = VideoCamera()
+    cap.video_cap(img_name, image_dir)
+    py_resize.resize_image(img_name)
+    py_gan.gan_image(img_name)
+    image_name = os.path.join(pred_dir, img_name) + '.JPG'
+    input_name = os.path.join(input_dir, img_name) + '.JPG'
+    twitter = twitter_bot()
+    twitter.output('変換前', input_name)
+    twitter.output(name, image_name)
     return render_template("output.html",output=name)
 
 def generate(camera):
@@ -45,10 +55,6 @@ def feed():
 
 @app.route('/generategan')
 def generategan():
-    cap = VideoCamera()
-    cap.video_cap(img_name, image_dir)
-    py_resize.resize_image(img_name)
-    py_gan.gan_image(img_name)
     return render_template("generategan.html", output=output)
 
 if __name__ == '__main__':
