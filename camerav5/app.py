@@ -7,18 +7,20 @@ import py.gan as py_gan
 import os
 import numpy as np
 from PIL import Image
+import datetime
 
+image_dir = 'py/input/'
 input_dir = 'py/output/'
 pred_dir = 'py/pred/'
+#imageのなまえ
+img_name = str(datetime.datetime.now())
 
 app = Flask(__name__)
 app.secret_key = "hello"
+
 #Opencvから毎回入ってくるであろう値
 input_shape = ["4"]
 input_vec = [500, 500]
-
-#imageのなまえ
-img_name = 'shapes8'
 
 @app.route('/', methods = ["POST", "GET"])
 def index():
@@ -43,6 +45,8 @@ def feed():
 
 @app.route('/generategan')
 def generategan():
+    cap = VideoCamera()
+    cap.video_cap(img_name, image_dir)
     py_resize.resize_image(img_name)
     py_gan.gan_image(img_name)
     return render_template("generategan.html", output=output)
