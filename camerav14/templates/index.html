@@ -103,7 +103,7 @@
             var Flask_input_vec = [];
             var Flask_input_shape = [];
             var Flask_input_flag = [];
-            var a = 0;
+            var Flask_input_x = [];
             //---------------------------------------setup---------------------------------------------
             function setup() {
                 createCanvas(python_vec[0], python_vec[1]);
@@ -127,6 +127,7 @@
             //---------------------------------------draw---------------------------------------------
             function draw() {
                 
+                //------------------------------------------Pythonからの受け渡しーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
                 // $(function() {
                 //   setInterval(get,1000);
                 function get() {
@@ -144,20 +145,23 @@
                         Flask_input_vec.push(obj.vec);
                         Flask_input_shape.push(obj.shape);
                         Flask_input_flag.push(obj.flag);
+                        Flask_input_x.push(obj.x);
                     });
                 }
                 // });
                 get();
                 Array.prototype.getLastVal = function (){ return this[this.length -1];}
                 // console.log(Flask_input_flag.getLastVal(), Flask_input_shape.getLastVal(), Flask_input_vec.getLastVal());
-                a = Flask_input_flag.getLastVal();
-                console.log(a)
+                
+                console.log(Flask_input_x.getLastVal(), Flask_input_flag.getLastVal());
                 //---------------------------------FlaskのOpencvからの値が入った時に新しい積み木をPush-------------------------------------
-                if(Flask_input_flag.getLastVal()){
-                    input_python(Flask_input_shape.getLastVal(), Flask_input_vec.getLastVal())
+                if(Flask_input_flag.getLastVal() == 1){
+                    alert("get tsumiki");
+                    input_python(Flask_input_shape.getLastVal(), Flask_input_vec.getLastVal());
                     console.log('come', Flask_input_vec.getLastVal(), Flask_input_shape.getLastVal(), Flask_input_flag.getLastVal());
-
                 }
+
+                //------------------------------------------Pythonからの受け渡しーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
                 background(0);
 
                 // We must always step through time!

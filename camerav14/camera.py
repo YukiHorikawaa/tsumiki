@@ -517,7 +517,9 @@ class VideoCamera():
             shape = list_shape[-1]
             vec = [list_shape_cx[-1], list_shape_cy[-1]]
 
-        return jpeg.tobytes(), flg, shape, vec
+        x = np.random.randint(100, 400)
+
+        return jpeg.tobytes(), flg, shape, vec, x
 
     def input_shape(self):
         # global flg, list_shape

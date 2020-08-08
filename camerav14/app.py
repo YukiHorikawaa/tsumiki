@@ -59,9 +59,9 @@ def output(name):
 
 def generate(camera):
     while True:
-        global frame, op_flag, op_shape, op_vec
-        frame, op_flag, op_shape, op_vec = camera.get_frame()
-        print(len(list_flag))
+        global frame, op_flag, op_shape, op_vec, x
+        frame, op_flag, op_shape, op_vec, x = camera.get_frame()
+        # print(len(list_flag))
         # list_flag.append(op_flag)
         # list_shape.append(op_shape)
         # list_vec.append(op_vec)
@@ -75,8 +75,8 @@ def feed():
 
 def gene():
     # data = {"flag": list_flag[-1], "shape": list_shape[-1], "vec": list_vec[-1]}
-    data = {"flag": op_flag, "shape": op_shape, "vec": op_vec}
-    print(cap.flag())
+    data = {"flag": op_flag, "shape": op_shape, "vec": op_vec, "x": x}
+    print(x, op_flag)
     yield json.dumps(data)
    
 @app.route('/numb')
