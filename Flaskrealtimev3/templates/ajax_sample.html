@@ -1,0 +1,31 @@
+	
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>jQuery TIPS</title>
+</head>
+<body>
+<form>
+  <ul id="result" class="ajax"></ul>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(function() {
+  setInterval(get,1000);
+  function get() {
+    $.ajax('/numb',
+      {
+        type: 'get',
+        dataType: 'json'
+      }
+    )
+    // 検索成功時にはページに結果を反映
+    .done(function(data) {
+      $('#result').text(JSON.stringify(data));
+    });
+  }
+});
+</script>
+</body>
+</html>

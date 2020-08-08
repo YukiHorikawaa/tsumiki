@@ -24,11 +24,11 @@ def feed():
     return Response(generate(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def gene():
-    while True:
-        x = np.random.randint(100, 400)
-        sleep(1)
-        data = {"id": "aaa", "title": x}
-        yield json.dumps(data)
+    # while True:
+    x = np.random.randint(100, 400)
+    # sleep(1)
+    data = {"id": "aaa", "title": x}
+    yield json.dumps(data)
    
 @app.route('/numb')
 def numb():
@@ -37,6 +37,10 @@ def numb():
 @app.route('/j')
 def j():
     return jsonify(hello='world') # Returns HTTP Response with {"hello": "world"}
+
+@app.route('/ajax')
+def ajax():
+    return render_template('ajax_sample.html')
 
 if __name__ == '__main__':
     app.run(debug=True,host='127.0.0.1')
