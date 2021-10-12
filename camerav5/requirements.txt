@@ -43,7 +43,7 @@ music21==5.7.2
 numpy==1.18.2
 oauth2client==4.1.3
 oauthlib==3.1.0
-opencv-contrib-python==4.1.0.25
+opencv-contrib-python==4.2.0.32
 opt-einsum==3.2.1
 opticspy @ git+git://github.com/Sterncat/opticspy.git@894259e3b495c25e620127f08fe73c06e464cfcb
 Pillow==7.1.2
